@@ -18,6 +18,14 @@ var expenseCounter = {
     this.total += amount;
   },
 };
+
+var totals = {
+  totalDiscIncome: 0,
+  getDiscIncome: function () {
+    this.totalDiscIncome = incomeCounter.total - expenseCounter.total;
+    return this.totalDiscIncome;
+  },
+};
 function addIncomeItem() {
   let incomeName = document.getElementById("income-name").value;
   let incomeAmount = document.getElementById("income-amount").value;
@@ -31,7 +39,11 @@ function addIncomeItem() {
   cell2.innerHTML = incomeName;
   cell3.innerHTML = "$" + incomeAmount;
   incomeCounter.incrementCount();
-  incomeCounter.incrementTotal(incomeAmount);
+  incomeCounter.incrementTotal(Number(incomeAmount));
+
+  document.getElementById("income-result").innerText =
+    "Your total Monthly Income: $" + incomeCounter.total;
+  updateTotal();
 }
 
 function addExpenseItem() {
@@ -47,5 +59,15 @@ function addExpenseItem() {
   cell2.innerHTML = expenseName;
   cell3.innerHTML = "$" + expenseAmount;
   expenseCounter.incrementCount();
-  expenseCounter.incrementTotal(expenseAmount);
+  expenseCounter.incrementTotal(Number(expenseAmount));
+
+  document.getElementById("expense-result").innerText =
+    "Your total Monthly Expenses: $" + expenseCounter.total;
+  updateTotal();
+}
+
+function updateTotal() {
+  totals.getDiscIncome();
+  document.getElementById("total-result").innerText =
+    "Your Monthly Discretionary Income is: $" + totals.totalDiscIncome;
 }
